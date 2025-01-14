@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #131e20;
+    color: #FFFFFF;
+}
+
+header {
+    width: 100%;
+    background-color: #131e20;
+    padding: 50px 0;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 75px;
+    /* Adjusted gap between menu items */
+}
+
+nav ul li {
+    position: relative;
+    /* Required for the underline effect */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: lighter;
+    font-size: 18px;
+    position: relative;
+    /* Required for the underline effect */
+    padding: 0 5px;
+    /* Add padding to extend the underline beyond the text */
+}
+
+nav ul li a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -10px;
+    /* Extend the underline to the left */
+    bottom: -8px;
+    /* Adjust distance from text */
+    width: calc(100% + 20px);
+    /* Extend the underline to the right */
+    height: 2px;
+    /* Thickness of the underline */
+    background-color: #FFFFFF;
+    /* Color of the underline */
+    transform: scaleX(0);
+    /* Hide the underline by default */
+    transition: transform 0.3s ease;
+    /* Smooth transition */
+}
+
+nav ul li a.active::after {
+    transform: scaleX(1);
+    /* Show the underline for the active page */
+}
+
+.container {
+    padding-top: 150px;
+    /* Ensures space for fixed header */
+    text-align: center;
+    position: relative;
+    /* Make container relative to position image correctly */
+}
+
+.container h1 {
+    font-family: 'Cormorant', serif;
+    font-size: 130px;
+    font-weight: normal;
+    margin: 0;
+    position: relative;
+    /* To adjust image intersection */
+    z-index: 2;
+    /* Ensure text is above image */
+}
+
+.stretch {
+    display: inline-block;
+    transform: scale(1, 1.2);
+}
+
+.image-text-container {
+    position: relative;
+    display: inline-block;
+    margin-top: -50px;
+    /* Adjust to move image up */
+    width: 1500px;
+}
+
+.image-text-container img {
+    width: 600px;
+    /* Slightly larger image */
+    height: auto;
+    object-fit: cover;
+    position: relative;
+    top: 0;
+    /* Ensure image is correctly positioned */
+}
+
+.image-text-container p {
+    position: absolute;
+    bottom: 10px;
+    /* Adjust bottom position */
+    left: 1080px;
+    /* Align text to the left */
+    font-size: 18px;
+    max-width: 300px;
+    /* Adjust text width to fit better */
+    margin: 0;
+    font-weight: lighter;
+    text-align: left;
+    /* Align text to the left */
+    line-height: 1.5;
+    /* Adjust line height for better readability */
+}

@@ -1,0 +1,113 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: #050e17;
+    margin: 0rem;
+    overflow: hidden;
+    font-family: 'Source Sans 3', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #131e20;
+    color: #FFFFFF;
+}
+
+header {
+    width: 100%;
+    background-color: #131e20;
+    padding: 50px 0;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 75px;
+    /* Adjusted gap between menu items */
+}
+
+nav ul li {
+    position: relative;
+    /* Required for the underline effect */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: lighter;
+    font-size: 18px;
+    position: relative;
+    /* Required for the underline effect */
+    padding: 0 5px;
+    /* Add padding to extend the underline beyond the text */
+}
+
+nav ul li a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -10px;
+    /* Extend the underline to the left */
+    bottom: -8px;
+    /* Adjust distance from text */
+    width: calc(100% + 20px);
+    /* Extend the underline to the right */
+    height: 2px;
+    /* Thickness of the underline */
+    background-color: #FFFFFF;
+    /* Color of the underline */
+    transform: scaleX(0);
+    /* Hide the underline by default */
+    transition: transform 0.3s ease;
+    /* Smooth transition */
+}
+
+nav ul li a.active::after {
+    transform: scaleX(1);
+    /* Show the underline for the active page */
+}
+
+#image-track {
+    display: flex;
+    gap: 4vmin;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    user-select: none;
+    /* -- Prevent image highlighting -- */
+}
+
+#image-track>.image {
+    width: 40vmin;
+    height: 56vmin;
+    object-fit: cover;
+    object-position: 100% center;
+}
+
+.image-button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+    /* Ensure it doesn't take up the full width */
+    vertical-align: middle;
+    /* Align vertically in the same line */
+}
+
+.image-button .image {
+    width: 40vmin;
+    height: 56vmin;
+    object-fit: cover;
+    object-position: 100% center;
+}

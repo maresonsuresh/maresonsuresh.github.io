@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="portfolioitemsstyles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Mareson Suresh</title>
+</head>
+
+<body>
+    <a href="portfolio.html" class="back-link">Back</a>
+
+    <div class="container">
+        <div class="image-half">
+            <img src="metalloprotein.png" alt="Image">
+        </div>
+        <div class="text-half">
+            <h1>Deterministic and Stochastic Approaches to the <br>Michaelis-Menten Model</h1>
+            <div class="text-box">
+                <p>
+                    <span id="equation">
+                        \({\displaystyle \ce{E + S <=>[k_1][k_{-1}] ES ->[k_2] E + P}}\)
+                    </span>
+                </p>
+            </div>
+            <div class="text-box-gray">
+                <p>The Michaelis-Menten system models an enzyme-catalyzed reaction as<br> a function of the concentrations of the enzyme and its substrates</p>
+            </div>
+            <div class="text-box">
+                <p>↓</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-section">
+        <div class="section-content">
+            <div class="section-text">
+                <div class="section-item">
+                    <h3>Modeling the System of Differential Equations</h3>
+                    <p>
+                        Biochemical reactions involve proteins called <i>enzymes</i>, acting as catalysts, which selectively react with compounds called <i>substrates</i>. A fundamental enzymatic reaction proposed by Michaelis and Menten involves a substrate
+                        <i>S</i> reacting with an enzyme <i>E</i> to form a complex <i>SE</i>, which subsequently transforms into a product <i>P</i> and the original enzyme. Schematically,
+
+                    </p>
+                    <p class="centeredEq">
+                        <span id="equation">
+                            \({\displaystyle \ce{E + S <=>[k_1][k_{-1}] ES ->[k_2] E + P}}\)
+                        </span>
+                    </p>
+
+                    <p><i>The Law of Mass Action</i> states that the rate of a chemical reaction is directly proportional to the concentrations of the reactants. The constant parameters k<sub>1</sub>, k<sub>-1</sub>, k<sub>2</sub>, are constants of proportionality
+                        associated with the rates of the reactions. By denoting the concentrations of the reactants as follows.</p>
+
+                    <p class="centeredEq">
+                        <span id="equation">
+                            \( s = [S],\ e = [E],\ c = [SE],\ p = [P] \)
+                            </span>
+                    </p>
+
+                    <p>Applying the Law of Mass Action, we arrive at the system of nonlinear equations and the following initial values for each reactant</p>
+
+                    <p class="centeredEq">
+                        <span id="equation">
+                            \[
+                            \frac{ds}{dt} = -k_1es + k_{-1}c, \quad
+                            \frac{de}{dt} = -k_1es + (k_{-1} + k_2)c
+                            \]
+                            \[
+                            \frac{dc}{dt} = k_1es - (k_{-1} + k_2)c, \quad
+                            \frac{dp}{dt} = k_2c.
+                            \]
+
+                            \[
+                            s(0) = s_0, \quad e(0) = e_0, \quad c(0) = 0, \quad p(0) = 0.
+                            \]
+                            </span>
+                    </p>
+
+                    <p>Using the initial conditions for the system outlined in Samaneh Ghalami and Silvana Ilie’s paper titled <i>Quantifying Parameter Interdependence in Stochastic Discrete Models of Biochemical Systems</i>. We can graph the system using
+                        the following Python libraries: numpy, matplotlib, and scipy (the ODE calculator) for which the code is provided below.
+                    </p>
+
+                    <img src="MM_ODE.png" class="stochimage">
+
+                    <p>
+                        <code class="codingtext">
+                            <pre>
+# Constants
+vol = 10**-15  # Volume
+n_A = 6.023e23  # Avogadro's Number
+c1 = 10**6 / (n_A * vol)
+c2 = 10**-4
+c3 = 10**-1
+S_initial = int(5e-7 * n_A * vol)
+E_initial = int(2e-7 * n_A * vol)
+ES_initial = 0
+P_initial = 0
+t_end = 50
+
+#Differential equations
+def michaelis_menten_system(y, t, c1, c2, c3, E):
+s, c, e, p = y
+ds_dt = -c1 * E * s + (c1 * s + c2) * c
+dc_dt = c1 * E * s - (c1 * s + c2 + c3) * c
+de_dt = -c1 * E * s + (c1 * s + c2) * c + c3 * c
+dp_dt = c3 * c
+return [ds_dt, dc_dt, de_dt, dp_dt]
+                                
+#Initial conditions [s(0), c(0), e(0), p(0)]
+initial_conditions = [S, ES, E, P]
+solution = odeint(michaelis_menten_system, initial_conditions, t, args=(c1, c2, c3, E))
+s, c, e, p = solution.T</pre>
+                        </code>
+                    </p>
+
+                    <h3>Stochastic Simulation Algorithm</h3>
+
+                    <p>Deterministic models fail to fully encapsulate the effects of random fluctuations in biochemical systems, making stochastic models preferred to account for the intrinsic noise observed experimentally.</p>
+                    <p>First introduced in a 1976 paper, the Stochastic Simulation Algorithm (Gillespie Algorithm) is a Monte Carlo method used to simulate the dynamics of chemical reaction systems, modeled as a continuous-time Markov process.</p>
+                </div>
+
+                <p style="line-height: 1.8;">
+                    <b>Gillespie's Algorithm:</b><br> 1. Initialize the system, set time \( t = t_0 \) and system state \( x = x_0 \). <br> 2. For each reaction \( j \), calculate the propensity functions \( a_j(\mathbf{X}) \) and total propensity (their
+                    sum) \( a_0(\mathbf{X}) = \sum_{j=1}^{M} a_j(\mathbf{X}) \). <br> 3. Randomly sample two uniform random variables \( \eta_1 \), \( \eta_2 \in [0, 1] \). <br> 4. Evaluate the time \( \tau \) and index \( j \), given by:<br>&emsp;(a)
+                    \( \tau = -\frac{\ln \eta_1}{a_0(x)} \)<br>&emsp;(b) \( j = \) the smallest integer satisfying \( \sum_{r=1}^{j} a_r(x) > \eta_2 a_0(x) \) <br> 5. Update the system by replacing time \( t \gets t + \tau \) and the system \( x \gets
+                    x + \mathbf{v}_j \). <br>6. Go to step 2, or end the simulation.
+                </p>
+
+                <p>
+                    Using the same initial conditions as those employed in the differential equations example, we can generate evolution time stochastic simulations of the Michaelis-Menten model. The python code for the function is provided below.
+                </p>
+                <img src="MM_Stochastic.png" class="stochimage">
+
+                <p>
+                    <code class="codingtext">
+                        <pre>
+def gillespie_simulation(c1, c2, c3, S, E, ES, P, t_end):
+
+    # Initial Parameters
+    S_list = [S]
+    E_list = [E]
+    ES_list = [ES]
+    P_list = [P]
+    # Time Parameters
+    t = 0
+    time = [t]
+
+    # Gillespie algorithm
+    while t < t_end:
+        # Propensities
+        a1 = c1 * S * E    # Propensity of S + E -> ES
+        a2 = c2 * ES       # Propensity of ES -> S + E
+        a3 = c3 * ES       # Propensity of ES -> P + E
+        a0 = a1 + a2 + a3  # Sum of Propensities
+
+        # Time step
+        r1 = np.random.rand()
+        tau = -np.log(r1) / a0
+
+        # Reaction selection
+        r2 = np.random.rand()
+        if r2 < a1 / a0: # Reaction S + E -> ES
+            S -= 1
+            E -= 1
+            ES += 1
+        elif r2 < (a1 + a2) / a0: # Reaction ES -> S + E
+            ES -= 1
+            S += 1
+            E += 1
+        else: # Reaction ES -> P + E
+            ES -= 1
+            P += 1
+            E += 1
+
+        # Update time
+        t += tau
+        time.append(t)
+        S_list.append(S)
+        E_list.append(E)
+        ES_list.append(ES)
+        P_list.append(P)
+
+    return time, S_list, E_list, ES_list, P_list
+</pre>
+                    </code>
+                </p>
+
+                <p>The following figure represents 50 simulations of the Michaelis-Menten process with nominal parameters and varying \( \eta_1 \) and \( \eta_2 \).</p>
+
+                <img src="MM_FiftySims.png" class="stochimage">
+
+                <p>To illustrate the mean and variance of each species in the Michaelis-Menten model, the results from numerous iterations were interpolated over a common time grid. The Stochastic Simulation Algorithm (SSA) remains identical, with data from
+                    100,000 simulations interpolated over the interval \( t = [0, 50] \) using 1000 data points, resulting in a time interval of roughly one twentieth of a second. Interpolation is necessary because the SSA generates random time points,
+                    determined by \( \eta_1 \), a uniform random variable on \([0,1]\).
+                </p>
+                <p> The mean illustrates the average distribution of the system across multiple stochastic simulations, while variance captures the degree of fluctuation around this mean, highlighting the intrinsic noise inherent in the system.</p>
+                </p>
+
+                <img src="MM_Mean.png" class="stochimage">
+                <p></p>
+                <img src="MM_Var.png" class="stochimage">
+
+                <p>To further optimize the mean and variance calculations, the Next Reaction Method (NRM) and Random Time Change (RTC) method can be implemented to reduce computational complexity and improve accuracy respectively. The Next Reaction Method
+                    minimizes calculations by only performing recalculations on reaction propensities when necessary—specifically when the reactants of the propensity calculation are involved in the previous reaction—and by utilizing a priority queue
+                    to determine which reaction occurs next. The Next Reaction Method (NRM) reduces Gillespie’s Algorithm from a time complexity of \(O(n)\) to \(O(\log n)\). The Random Time Change (RTC) method models each reaction as an independent unit
+                    rate Poisson process, where event times are scaled dynamically by the reaction propensities.</p>
+
+                <div class="section-item">
+                    <h3>References</h3>
+
+                    <div class="reference-table">
+
+                        <div class="reference-row">
+                            <div class="reference-cell">[1]</div>
+                            <div class="reference-cell">Dou, G. (2023). Simulation algorithms for Markovian and non-Markovian epidemics. <i>Quantative Biology</i>. https://doi.org/10.48550/arXiv.2302.02812
+                            </div>
+                        </div>
+
+                        <div class="reference-row">
+                            <div class="reference-cell">[2]</div>
+                            <div class="reference-cell">Gholami, S., & Ilie, S. (2023). Quantifying parameter interdependence in stochastic discrete models of biochemical systems. <i>Entropy, 25</i>, 1168.<br> https://doi.org/10.3390/e25081168</div>
+                        </div>
+
+                        <div class="reference-row">
+                            <div class="reference-cell">[3]</div>
+                            <div class="reference-cell">Gillespie, D. T. (1976). A general method for numerically simulating the stochastic time evolution of coupled chemical reactions. <i>Journal of Computational Physics, 22</i>, 403-434.<br> https://doi.org/10.1016/0021-9991(76)90041-3</div>
+                        </div>
+
+                        <div class="reference-row">
+                            <div class="reference-cell">[4]</div>
+                            <div class="reference-cell">Jabeen, F., & Ilie, S. (2022). Effective finite-difference techniques for estimating sensitivities for stochastic biochemical systems. <i>Applied Mathematics, 13</i>, 878-895.<br> https://doi.org/10.4236/am.2022.1311056</div>
+                        </div>
+                        <div class="reference-row">
+                            <div class="reference-cell">[5]</div>
+                            <div class="reference-cell">Murray, J. D. (2002). <i>Mathematical Biology: I. An Introduction</i>. Springer.</div>
+                        </div>
+
+                        <div class="section-item">
+                            <p><br></p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>

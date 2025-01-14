@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="portfolioitemsstyles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Mareson Suresh</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="image-half">
+            <img src="juliatesting.png" alt="Image">
+        </div>
+        <div class="text-half">
+            <h1>Julia Set Generation<br>In Python Using<br>Matplotlib</h1>
+            <div class="text-box">
+                <p>f : z → z<sup>2</sup> + c</p>
+            </div>
+            <div class="text-box-gray">
+                <p>The Julia Set is a mathematical concept in fractal geometry<br>defined by an iterative function generating vivid and extraordinary<br>quasi self-similar structures. </p>
+            </div>
+            <div class="text-box">
+                <p>↓</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-section">
+        <div class="section-content">
+            <div class="section-text">
+                <div class="section-item">
+                    <h3>Defining the Julia Set</h3>
+                    <p>
+                        The Julia Set is a fractal defined by an iterative function, for this example we will be discussing sets generated solely from f(z) = z<sup>2</sup> + c. Initialised by a complex number c = x + yi, the recursive function z<sub>n+1</sub>                        = z<sub>n</sub><sup>2</sup> + c is iterated from z<sub>0</sub> being any given point within the respective bounds, while c remains as the predefined constant. After a given number of iterations, if zn does not approach infinity,
+                        and remains within the given bounds, z<sub>0</sub> exists within the Julia set (our given example uses bounds of x ∈ [-2, 2] and y ∈ [-2, 2]). This iterated process is done for all points z0 for a given resolution within the bounds.
+                    </p>
+                    <img src="Figure_1.png" alt="JuliaSet_1" class="julia-image1">
+                    <p>
+                        Being represented on the complex-plane, the topological dimension of a Julia Set is 2. For any metric space, the Hausdorff dimension is a measure of roughness, measuring how a set “fills up” as its parameters change. The Hausdorff dimension of a Julia
+                        Set J(f), satisfies the conditions 1 ≤ J(f) ≤ 2. An example of the Julia Set with defined Hausdorff Dimension are the Douady Rabbit (D<sub>H</sub> = 1.3934), one of which is pictured below. </p>
+                    <img src="JuliaRabbit.png" alt="JuliaSet_1" class="julia-image1">
+                </div>
+                <div class="section-item">
+                    <h3>Generating Julia Sets<br>Using Matplotlib</h3>
+                    <p>
+                        <code class="codingtext">
+                            <pre>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+import time
+
+st = time.time()
+
+iterations = 200
+resolution = 2000
+ 
+c = complex(-0.4, -0.59)
+
+real_min, real_max = -2.0, 2.0
+imaginary_min, imaginary_max = -2.0, 2.0
+
+x_axis = np.linspace(real_min, real_max, resolution)
+imaginary_axis = np.linspace(imaginary_min, imaginary_max, resolution)
+
+x_values, i_values = np.meshgrid(x_axis, imaginary_axis)
+julia_set = np.zeros((resolution, resolution), dtype=np.uint16) 
+
+def julia(c, iter):
+    z = x + y * 1j
+    for n in range(iter):
+        if abs(z) > 2.0:
+            return n
+        z = z*z + c
+    return iter
+
+colors = LinearSegmentedColormap.from_list('my_cmap', ['#141414', '#000050',
+'#0000e3', '#fc6995', '#fff63f', 'white'], N=iterations)
+image = np.zeros((resolution, resolution, 3))
+
+for i in range(resolution):
+    for j in range(resolution):
+        x, y = x_values[i, j], i_values[i, j]
+        iteration = julia(c, iterations)
+        normalized_iteration = iteration / iterations
+        color = colors(normalized_iteration)
+        image[i, j] = color[:-1]
+
+plt.figure(figsize=(8, 8))
+plt.imshow(image, extent=(real_min, real_max, imaginary_min, imaginary_max))
+
+plt.axis('equal')
+plt.axis('off')
+
+et = time.time()
+elapsed_time = et - st
+print('\nExecution time:', round(elapsed_time, 3), 'seconds')
+
+plt.show()
+                            </pre>
+                        </code>
+                    </p>
+                </div>
+                <!-- <div class="section-item">
+                    <h3>Paragraph 3</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+                    </p>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</body>

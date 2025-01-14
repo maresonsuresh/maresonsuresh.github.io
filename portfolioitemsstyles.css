@@ -1,0 +1,142 @@
+body,
+h1,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+.back-link {
+    text-decoration: underline;
+    color: gray;
+    margin: 10px 20px;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    /* Adjust the width as desired */
+    height: 100%;
+    /* Adjust the height as desired */
+}
+
+.image-half {
+    width: 50%;
+    padding: 20px;
+    /* Add padding between the image and text */
+}
+
+.image-half img {
+    width: 100%;
+    height: auto;
+}
+
+.text-half {
+    width: 50%;
+    padding: 20px;
+    /* Add padding between elements */
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 6vh;
+    margin-top: 20px;
+    margin-bottom: 12vh;
+    /* Add spacing below the title */
+}
+
+.text-box {
+    font-weight: 400;
+    font-size: 18px;
+    /* Add spacing between text boxes */
+}
+
+.text-box-gray {
+    font-weight: 400;
+    font-size: 18px;
+    margin-top: 3vh;
+    margin-bottom: 35vh;
+    color: #5b5b5b;
+    /* Add spacing between text boxes */
+}
+
+.bottom-section {
+    margin-top: 3vh;
+    width: 100vw;
+    background-color: #141414;
+    color: white;
+    /* Ensure the text is within the middle third */
+}
+
+.section-content {
+    margin-top: 3vh;
+    translate: 33vw 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 33%;
+}
+
+h3 {
+    font-size: 4.5vh;
+    margin-bottom: 20px;
+}
+
+.section-text p {
+    margin: 25px 0;
+    /* Add spacing between paragraphs */
+}
+
+.julia-image1 {
+    width: 33vw;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.codingtext {
+    font-size: 16px;
+}
+
+.centeredEq {
+    text-align: center;
+    position: relative;
+}
+
+.stochimage {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.reference-table {
+    display: table;
+    width: 100%;
+}
+
+.reference-row {
+    display: table-row;
+}
+
+.reference-cell {
+    display: table-cell;
+    padding: 5px;
+    /* Adjust padding as needed */
+}
